@@ -1,0 +1,24 @@
+{% extends "data/main.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+</br>
+<div class="container-fluid">
+    <div class="row justify-content-md-center">
+        <div class="col-md-5">
+            <div class="card card-body">
+                <h3 align="center">Halaman Register</h3>
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    {{ tampilregister|crispy }}
+                    <br>
+                    <input type="submit" class="btn btn-primary" name="Save" Value="Register" />
+                </form>
+                <br>
+                <div class="border-top pt-3">
+                    <small class="text-muted">Jika sudah punya akun, silahkankan <a class="ml2" href="{% url 'login' %}">Sign In</a></small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

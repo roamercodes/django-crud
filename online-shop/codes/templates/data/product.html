@@ -1,0 +1,39 @@
+{% extends "data/main.html" %}
+{% load humanize %}
+{% block content %}
+</br>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md">
+            <div class="row">
+                <div class="col-md-10">
+                    <h5>Products</h5>
+                </div>
+                <div>
+                    <a class="btn btn-outline-success btn-sm" href="{% url 'create_product' %}">Create Product</a>
+                </div>
+            </div>
+            <hr>
+            <table class="table">
+                <tr>
+                    <th>Product</th>
+                    <th>Category</th>
+                    <th>Price</th>
+                    <th>Update</th>
+                    <th>Remove</th>
+                </tr>
+                {% for dataproduct in product %}
+                <tr>
+                    <td>{{ dataproduct.name }}</td>
+                    <td>{{ dataproduct.category }}</td>
+                    <td>Rp. {{ dataproduct.price|intcomma}}</td>
+                    <td><a href="{% url 'update_product' dataproduct.id %}" class="btn btn-success">Update</a></td>
+                    <td><a href="{% url 'delete_product' dataproduct.id %}" class="btn btn-danger">Delete</a></td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock content  %}

@@ -1,0 +1,123 @@
+{% extends "data/main.html" %}
+{% load crispy_forms_tags %}
+{% load widget_tweaks %}
+{% block content %}
+
+
+<br>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card card-body">
+                <h5>Customer:</h5>
+                <hr>
+                <a class="btn btn-outline-info btn-sm btnblock" href="">Update Customer</a>
+                <a class="btn btn-outline-danger btn-sm btnblock" href="">Delete Customer</a>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card card-body">
+                <h5>Contact Information</h5>
+                <hr>
+                <p>Email: {{ customer.email }}</p>
+                <p>Phone: {{ customer.phone }}</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card card-body">
+                <h5>Total Orders</h5>
+                <hr>
+                <h1 style="text-align: center;padding: 10px">{{ data_total_customer }}</h1>
+            </div>
+        </div>
+    </div>
+   <br>
+    <div class="row">
+        <div class="col">
+            <div class="card card-body">
+                <form method="get">
+                    <div class="row">
+                        <div class="col">
+                            Product:
+                            {{ filter_data_order.form.product | add_class:"form-control"}}
+                        </div>
+                        <div class="col">
+                            Status:
+                            {{ filter_data_order.form.status | add_class:"form-control"}}
+                        </div>
+                        <div class="col">
+                            note:
+                            {{ filter_data_order.form.note | add_class:"form-control"}}
+                        </div>
+                        <div class="col">
+                            From Date:
+                            {{ filter_data_order.form.tglmulai | add_class:"formcontrol" |attr:"type:date"}}
+                        </div>
+                        <div class="col">
+                            Until Date:
+                            {{ filter_data_order.form.tglakhir | add_class:"formcontrol" |attr:"type:date"}}
+                        </div>
+                        <div class="col mt-4">
+                            <button class="btn btn-primary" type="submit">Search</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-md">
+            <div class="card card-body">
+                <table class="table table-sm">
+                    <tr>
+                        <th>Product</th>
+                        <th>Category</th>
+                        <th>Note</th>
+                        <th>Date Orderd</th>
+                        <th>Status</th>
+                        <th>Update</th>
+                        <th>Remove</th>
+                    </tr>
+            {% for tampil_order_custumer in halaman_order_custumer.object_list %}
+                    <tr>
+                        <td>{{ tampil_order_custumer.product }}</td>
+                        <td>{{ tampil_order_custumer.product.category }}</td>
+                        <td>{{ tampil_order_custumer.note }}</td>
+                        <td>{{ tampil_order_custumer.date_created|date:"l, d N Y" }}</td>
+                        <td>{{ tampil_order_custumer.status }}</td>
+                        <td><a href="{% url 'update_order' tampil_order_custumer.id %}" class="btn btn-success">Update</a></td>
+                        <td><a href="{% url 'delete_order' tampil_order_custumer.id %}" class="btn btn-danger">Delete</a></td>
+                    </tr>
+            {% endfor %}
+                </table>
+                <hr />
+              <nav>
+                <ul class="pagination justify-content-center">
+                  <li class="page-item {% if not previous %} disabled {% endif %}">
+                    <a class="page-link" href="{{ previous }}">Previous</a>
+                  </li>
+
+                  {% for n in halaman_order_custumer.paginator.page_range %}
+                  {% if halaman_order_custumer.number == n %}
+                  <li class="page-item active" aria>
+                    <span class="page-link">
+                      {{ n }}
+                      <span class="sr-only">(current)</span>
+                    </span>
+                  </li>
+                  {% elif n > halaman_order_custumer.number|add:-3 and n < halaman_order_custumer.number|add:3 %}<li
+                    class="page-item"><a class="page-link" href="?halaman={{ n }}">{{ n }}</a></li>
+                    {% endif %}
+                    {% endfor %}
+                    <li class="page-item {% if not next %} disabled {% endif %}">
+                      <a class="page-link" href="{{ next }}">Next</a>
+                    </li>
+                </ul>
+              </nav>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content  %}

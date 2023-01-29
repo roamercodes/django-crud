@@ -1,0 +1,32 @@
+{% extends "data/main.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+</br>
+<div class="container-fluid">
+    <div class="row justify-content-md-center">
+        <div class="col-md-5">
+            <div class="card card-body">
+                {% if messages %}
+                {% for pesan in messages %}
+                <div class="alert alert-{{ pesan.tags }}" align="center"><b>{{ pesan }}</b></div>
+                {% endfor %}
+                {% endif %}
+                <h3 align="center">Halaman Login</h3>
+                <form action="" method="POST">
+                {% csrf_token %}
+                {{ tampillogin|crispy }}
+                <br>
+                <input type="submit" class="btn btn-primary" name="Save" value="Login" />
+                </form>
+                <br>
+                <div class="border-top pt-3">
+                    <small class="text-muted">
+                        Tidak Punya akun, Silakan <a class="ml2" href="{% url 'register' %}">Sign up Now</a>
+                    </small>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
